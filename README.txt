@@ -1,2 +1,2 @@
-Extraire le dossier microtest dans le répertoire www de wamp puis importer la base de donnée "microtest.sql"  
-Pour avoir accès au site : localhost/microtest/profil.php
+Extraire le dossier microtest dans le rÃ©pertoire www de wamp puis importer la base de donnÃ©e "microtest.sql"  qui est dans ce dossier
+Pour avoir accÃ¨s au site : localhost/microtest/profil.php

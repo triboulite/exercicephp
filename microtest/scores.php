@@ -1,30 +1,32 @@
 <?php session_start(); ?>
 
 <?php
-$score = 0;
-$prenom = $_SESSION['prénom'];
-if (isset($_POST['question1'])) {
-    if ($_POST['question1'] == 'rep2') {
-        $score += 1;
+if (isset($_SESSION['prénom'])) {
+    $score = 0;
+    $prenom = $_SESSION['prénom'];
+    if (isset($_POST['question1'])) {
+        if ($_POST['question1'] == 'rep2') {
+            $score += 1;
+        }
+    }
+    if (isset($_POST['question2'])) {
+        if ($_POST['question2'] == 'rep1') {
+            $score += 1;
+        }
     }
 }
-if (isset($_POST['question2'])) {
-    if ($_POST['question2'] == 'rep1') {
-        $score += 1;
-    }
-}
-
 try {
     $bdd = new PDO('mysql:host=localhost;dbname=microtest;charset=utf8', 'root', '');
 } catch (Exception $e) {
     die('Erreur : ' . $e->getMessage());
 }
-
-$req = $bdd->prepare('INSERT INTO scores(prenom, score) VALUES(:prenom, :score)');
-$req->execute(array(
-    'prenom' => $prenom,
-    'score' => $score
-));
+if (isset($_SESSION['prénom'])) {
+    $req = $bdd->prepare('INSERT INTO scores(prenom, score) VALUES(:prenom, :score)');
+    $req->execute(array(
+        'prenom' => $prenom,
+        'score' => $score
+    ));
+}
 $reponse = $bdd->query('SELECT * FROM scores');
 
 ?>
@@ -50,6 +52,7 @@ $reponse = $bdd->query('SELECT * FROM scores');
     }
 
     $reponse->closeCursor();
+    session_destroy();
     ?>
 
 </body>
